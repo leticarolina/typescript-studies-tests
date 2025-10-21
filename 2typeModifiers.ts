@@ -200,7 +200,7 @@ printLevel(candidate1.skillLevel); //Expert
 //another example index types, using index access ([number]) to extract all possible element types from the array.
 const a = ["abc", 123, true];
 type ArrayType = (typeof a)[number]; //typeof a → gets the type of the array, like (string | number | boolean)[]
-//[number] → means “give me the type of whatever is at a numeric index in that array.”
+//[number] → means go thru every number index and the type of whatever is at in that array is gonna be my type
 
 let arrayValue: ArrayType;
 arrayValue = "hello"; //OK

@@ -24,9 +24,9 @@ console.log(variable)
 
 
 //null and undefined are different types, but the value need to be splicity set otherwise default to :any
-let a = undefined; //no type :any, an undefined value could be any type
+let aa = undefined; //no type :any, an undefined value could be any type
 // a = null; //Type 'null' is not assignable to type 'undefined'.ts(2322)
-console.log(a); //null
+console.log(aa); //null
 //for this to show error due to different types need to set type of a: undefined
 
 //any = TypeScript stop checking types here
@@ -58,8 +58,8 @@ console.log(array); //(4) [1, 2, 3, 4]
 ////////////////////////////////////////////////////////////////////////////////////////
 // OBJECT TYPES
 ////////////////////////////////////////////////////////////////////////////////////////
-const person = { name: "Leticia", age: 1997 };
-console.log(person); //{name: 'Leticia', age: 1997}
+const personn = { name: "Leticia", age: 1997 };
+console.log(personn); //{name: 'Leticia', age: 1997}
 // person.isProgrammer = true; //Property 'isProgrammer' does not exist on type '{ name: string; age: number; }'
 //cannot push isProgrammer bcs it was not set on the array type of '{ name: string; age: number; }'
 
@@ -69,8 +69,8 @@ console.log(personWithAddOn); //personWithAddOn
 
 //creating an object type
 //declare type TypeVariable starting with upper case
-type Person = { name: string, age: number, address: (string | number)[] };//need to set array keys type
-const personA: Person = { name: "leticia", age: 1997, address: ["leti", 2, 3] };
+type Personn = { name: string, age: number, address: (string | number)[] };//need to set array keys type
+const personA: Personn = { name: "leticia", age: 1997, address: ["leti", 2, 3] };
 // personA.address.push(true); // Error, address array doesn't take boolean
 console.log(personA);
 
@@ -78,8 +78,8 @@ console.log(personA);
 //nesting an array type ninside the object
 type FavoriteNumbers = (number | string)[];
 type nameAndBirthYear = {name: string, year: number | boolean, favNumber: FavoriteNumbers };
-const leticia: nameAndBirthYear = { name: "Leticia", year: 1997, favNumber: [7, "seven", 89 ] };
-console.log(leticia); 
+const lety: nameAndBirthYear = { name: "Leticia", year: 1997, favNumber: [7, "seven", 89 ] };
+console.log(lety); 
 
 //(number | string) union type it can be a number or a string.
 // type Test = (number | string){}  // ❌ invalid, you must tell it something about the keys.
@@ -142,10 +142,10 @@ selectivePrint("Leti", { age: 1997 }); // active?: boolean was ignored
 
 
 //destructing
-function greet({ name, age }: { name: string; age: number }) {
+function greets({ name, age }: { name: string; age: number }) {
   console.log(name, age);
 }
-greet({name: "leticia",age: 1997});
+greets({name: "leticia",age: 1997});
 
 //Same thing, but cleaner
 type Erson = { name: string; age: number };
