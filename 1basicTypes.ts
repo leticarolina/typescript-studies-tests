@@ -1,10 +1,14 @@
-//npx tsc filename.ts // compile code
-//optional --noEmmitOnError
+//npx tsc filename.ts // runs the TypeScript compiler manuall
+//optional --noEmmitOnError //tells the compiler: If there are type errors, don’t output any JS file.
+//when using Vite, Next.js, or Create React App these tools already run the TypeScript compiler behind the scenes.
 
 //initalizing ts with vite
 //npm create vite@latest
-//npm i
+//npm install
 //npm run dev 
+
+//initalizing ts with next
+//npx create-next-app@latest
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // PRIMITIVE TYPES 
@@ -69,7 +73,7 @@ console.log(personWithAddOn); //personWithAddOn
 
 //creating an object type
 //declare type TypeVariable starting with upper case
-type Personn = { name: string, age: number, address: (string | number)[] };//need to set array keys type
+export type Personn = { name: string, age: number, address: (string | number)[] };//need to set array keys type
 const personA: Personn = { name: "leticia", age: 1997, address: ["leti", 2, 3] };
 // personA.address.push(true); // Error, address array doesn't take boolean
 console.log(personA);
@@ -142,10 +146,10 @@ selectivePrint("Leti", { age: 1997 }); // active?: boolean was ignored
 
 
 //destructing
-function greets({ name, age }: { name: string; age: number }) {
+function greeting({ name, age }: { name: string; age: number }) {
   console.log(name, age);
 }
-greets({name: "leticia",age: 1997});
+greeting({name: "leticia",age: 1997});
 
 //Same thing, but cleaner
 type Erson = { name: string; age: number };
