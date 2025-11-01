@@ -1,15 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 // UNIONS
 ////////////////////////////////////////////////////////////////////////////////////////
-
 //A union type means a variable can hold one of several types, using the | symbol
-//Real use
+//Real use..
 //Optional values: string | undefined
 //API responses: number | null
 //IDs: string | number
 //Also used for literal unions like "Complete" | "Incomplete"
 
-// variable ?: string; this syntax '?' is a union of type | undefined
+// variable?: string; //this syntax '?' is a union of 'string | undefined'
 
 let value: string | number; //this variable can be either this type or that type
 value = "Letícia"; 
@@ -21,8 +20,7 @@ id = 7;
 // id = true; //Type 'boolean' is not assignable to type 'string | number'.ts(2322)
 
 type Person = { id: number | string, isProgrammer?: boolean }
-// const leti: Person = { id: "0x01", isProgrammer: true };
-
+const letii: Person = { id: "0x01", isProgrammer: true };
 function leti({id, isProgrammer} :Person) {
   console.log(id, isProgrammer);
 }
@@ -30,19 +28,20 @@ leti({ id: "leticia", isProgrammer: true }); //leticia true
 
 
 type Todo = {
-  name: string,
+  task: string,
   status: "Complete" | "Incomplete" | "Draft"
 }
 //on status can only use one of default string values
-// const todo: Todo = { name: "Laudry", status: "Done" }; //Type '"Done"' is not assignable to type '"Complete" | "Incomplete" | "Draft"'.
+//const todo: Todo = { name: "Laudry", status: "Done" }; //Type '"Done"' is not assignable to type '"Complete" | "Incomplete" | "Draft"'.
 
 
-//union of two types, ps:interfaces doesnt do these union just types
+//union of two types
+// PS :interfaces doesnt do these union type,can declare as interface but the UNION only the 'type' keyword does
 type Merge = Person | Todo;
-const newTask: Merge = { name: "dishwash", status: "Incomplete" };
+const newTask: Merge = { task: "dishwash", status: "Incomplete" };
 
 //checking type before using it
-if (typeof newTask.name === "string") console.log(newTask.name.toUpperCase()); //DISHWASH
+if (typeof newTask.task === "string") console.log(newTask.task.toUpperCase()); //DISHWASH
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // INTERSECTIONS
@@ -50,9 +49,9 @@ if (typeof newTask.name === "string") console.log(newTask.name.toUpperCase()); /
 //Combine multiple types together → must have all their properties.
 //Used for composing types (ex: User & Address)
 
-type Cat = { meow: () => void };
-type Dog = { bark: () => void };
-type Pet = Cat & Dog; // must have BOTH meow() and bark()
+type Catty = { meow: () => void };
+type Doggy = { bark: () => void };
+type Pet = Catty & Doggy; // must have BOTH meow() and bark()
 const hybrid: Pet = {
   meow: () => console.log("meowing"),
   bark: () => console.log("barking"),
@@ -63,8 +62,9 @@ hybrid.meow(); //meowing
 //Person and Employee 
 type Employee = { category: number };
 type Staff = Person & Employee;
-type StaffErrror = Person & string; //an object can’t also be a primitive string.
-const leticia: Staff = { id: "Letícia",isProgrammer: true ,  category: 7};
+type StaffErrror = Person & string; //an object type can’t also be a primitive 'string'.
+
+const leticia: Staff = { id: "Letícia", isProgrammer: true , category: 7};
 console.log(leticia); //{id: 'Letícia', isProgrammer: true, category: 7}
 
 
@@ -207,3 +207,84 @@ arrayValue = "hello"; //OK
 arrayValue = 456;     //OK
 arrayValue = false;   //OK
 // arrayValue = null;    //Error: Type 'null' is not assignable to type 'string | number | boolean'.
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//                               EXERCISES OF THE FILE
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//-----------------UNIONS
+//given this type: 
+type ResponseData = ({ success: true; data: string[] } | { success: false; error: string });
+//write a function that takes a ResponseData and prints: “Loaded: …” or “Error: …”
+function responseHandle(obj: ResponseData) {
+  if (obj.success) {
+    return `Loaded: ${obj.data}`;
+  } else {
+    return `Error: ${obj.error}`;
+  }
+}
+console.log(responseHandle({ success: true, data: ['it', 'has', 'worked'] }));
+console.log(responseHandle({ success: false, error: "Some error!" }));
+
+//Write a function printId(id: string | number[])
+//→ if it’s a string, log “ID is a string:...”
+//→ if it’s an array, log each number.
+function printId(id: string | number[]) {
+  if (typeof id === "string") {
+    return `ID is an string: ${id}`
+  } else {
+    id.forEach((n) => {
+      //forEach doesn’t return anything, added the console.log for checking
+      return console.log(n);
+    })
+  }
+}
+console.log(printId("yes"));
+printId([1, 2, 3]); 
+
+//Create a type for a Button component prop called Variant that can only be "primary" | "secondary" | "danger".
+//Then create a function renderButton(variant: Variant) that logs the correct color.
+type Variant = "primary" | "secondary" | "danger"; 
+function renderButton(variant: Variant) {
+  const color =
+    variant === "primary"
+      ? "blue"
+      : variant === "secondary"
+      ? "gray"
+      : "red";
+
+  console.log(`Rendering ${variant} button with color ${color}`);
+}
+renderButton("danger");
+
+
+//-----------------INTERSECTIONS
+//You have these two types:
+type ContactInfo = { email: string; phone?: string };
+type Employeer = { id: number; name: string };
+//Create an EmployeeContact type that combines both.
+//Then write a function sendWelcomeEmail() that logs "Welcome, name! Email sent to email."
+type EmployeeContact = ContactInfo & Employeer;
+function sendWelcomeEmail(obj: EmployeeContact) {
+  return console.log(`Welcome, ${obj.name}! Email sent to ${obj.email}.`);
+}
+sendWelcomeEmail({ id: 1, email: "leticiac@email.com", name: "Leticia" });
+
+
+//Intersection with Union (advanced)
+//given the types:
+type Cat = { type: "cat"; meow: () => void };
+type Dog = { type: "dog"; bark: () => void };
+type MyPet = (Cat | Dog) & { age: number };
+//Now write a function describePet() that logs its type and age.
+function describePet(pet: MyPet) {
+  return `${pet.type}, ${pet.age}`;
+}
+console.log(describePet({ age: 7, type: "cat", meow: () => console.log("meow!")})); //cat, 7
+console.log(describePet({ type: "dog", age: 5, bark: () => console.log("bark!") })); //dog, 5
+
+
+
+
